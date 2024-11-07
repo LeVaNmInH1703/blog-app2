@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class GroupChat extends Model
+{
+    use HasFactory;
+    protected $fillable = ['name','last_activity_at','isChatWithSomeone','url_avatar'];
+    public function users(){
+        return $this->belongsToMany(User::class,'group_chat_details','group_id','user_id')->withPivot('role_id');
+    }
+    public function messages(){
+        return $this->hasMany(Message::class,'group_id_receive');
+    }
+    public function getId(){
+        return $this->id;
+    }
+}
