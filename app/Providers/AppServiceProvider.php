@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Feedback;
+use App\Models\Emoji;
 use App\Models\Notification;
 use DateTime;
 use Illuminate\Http\Request;
@@ -77,7 +77,7 @@ class AppServiceProvider extends ServiceProvider
         //view composer
         Facades\View::composer(['pages.home', 'pages.profile', 'pages.blogDetail'], function (View $view) {
             // Gửi dữ liệu tới view 'app.blade.php'
-            $view->with('feedbacks', Feedback::all());
+            $view->with('emojis', Emoji::all());
         });
         Facades\View::composer('layout.header', function ($view) {
             $view->with('notifications', Auth::user()->notifications->sortByDesc('created_at')->take(10));

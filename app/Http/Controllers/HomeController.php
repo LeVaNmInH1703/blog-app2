@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Comment;
-use App\Models\Feedback;
-use App\Models\FeedbackBlogDetail;
+use App\Models\Emoji;
+use App\Models\EmojiBlogDetail;
 use App\Models\User;
 use App\Notifications\EventNotification;
 use App\Notifications\SimpleNotification;

@@ -1,7 +1,7 @@
 @extends('layout.app')
 @section('content-app')
     <div class="container col-md-8 col-sm-8">
-        <div class="blog_container obj_container"><x-blog-component :blog=$blog :feedbacks=$feedbacks /></div>
+        <div class="blog_container obj_container"><x-blog-component :blog=$blog :emojis=$emojis /></div>
         <div id="form_container">
             <img src="#" alt="Preview" id="filePreview" hidden class="img-thumbnail mb-2">
             <form action="/create-comment/{{ $blog->id }}" method="POST" id="form_rep" enctype="multipart/form-data"
@@ -20,7 +20,7 @@
         <div class="comment_container obj_container">
             @foreach ($blog->comments as $comment)
                 @if ($comment->replyCommentDetail == null)
-                    <x-comment-component :comment=$comment :feedbacks=$feedbacks />
+                    <x-comment-component :comment=$comment :emojis=$emojis />
                 @endif
             @endforeach
         </div>
@@ -81,7 +81,7 @@
     @yield('style-comment-partial-view')
 @endsection
 @section('script-app')
-    <script src="{{ asset('js/feedbackAction.js') }}"></script>
+    <script src="{{ asset('js/emojiAction.js') }}"></script>
     <script src="{{ asset('js/comment/toggleCommentChild.js') }}"></script>
     <script src="{{ asset('js/comment/repAction.js') }}"></script>
     <script src="{{ asset('js/comment/submitFormCreate.js') }}"></script>

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('image_comment_details', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('blog_id');
-            $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('cascade');
+            $table->unsignedBigInteger('comment_id');
+            $table->foreign('comment_id')->references('id')->on('comments')->onDelete('cascade');
             $table->text('Image_name');
         });
     }

@@ -16,12 +16,12 @@ class PostEvent implements ShouldBroadcastNow
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $obj_id;
     public $user_id;
-    public $feedback_id;
+    public $emoji_id;
     public $name;
-    public function __construct($name,$obj_id,$feedback_id,$user_id)
+    public function __construct($name,$obj_id,$emoji_id,$user_id)
     {
         $this->obj_id = $obj_id;
-        $this->feedback_id = $feedback_id;
+        $this->emoji_id = $emoji_id;
         $this->user_id = $user_id;
         $this->name = $name;
     }

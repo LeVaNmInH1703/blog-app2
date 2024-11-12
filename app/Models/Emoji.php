@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Feedback extends Model
+class Emoji extends Model
 {
-    use HasFactory;// like, dislike
+    use HasFactory; // like, dislike
     protected $guarded = [];
-    protected $table='feedbacks';
+    protected $table = 'emojis';
 }

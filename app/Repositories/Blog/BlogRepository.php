@@ -3,20 +3,23 @@
 namespace App\Repositories\Blog;
 
 use App\Models\Blog;
-use App\Models\FeedbackBlogDetail;
+use App\Models\EmojiBlogDetail;
 use App\Repositories\BaseRepository;
 use App\Repositories\Blog\BlogRepositoryInterface;
+use App\Repositories\Comment\CommentRepository;
 use Illuminate\Support\Facades\Auth;
 
 class BlogRepository extends BaseRepository implements BlogRepositoryInterface
 {
-    public function __construct()
+    public $commentRepository;
+    public function __construct(CommentRepository $commentRepository)
     {
         parent::__construct(Blog::class);
+        $this->commentRepository=$commentRepository;
     }
-    public function getAndSetSomeBlog($n = 5, $loadedBlogs = [])
+    public function getAndSetSome($n = 5, $loadedBlogs = [])
     {
-        $blogs = Blog::with(['images','videos', 'feedbacks', 'user', 'comments'])
+        $blogs = Blog::with(['images','videos', 'emojiDetails', 'user'])
             ->where('scheduled_at', '<=', now())
             ->whereNotIn('id', $loadedBlogs)
             ->inRandomOrder()
@@ -29,41 +32,12 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
     }
     public function setBlog(Blog &$blog)
     {
-        $blog->countFeedback = $blog->feedbacks->count();
+        $blog->countEmoji = $blog->emojiDetails->count();
+        $blog->comment=$this->commentRepository->getAndSetSomeCommentBelongToBlog($blog);
         $blog->countComment = $blog->comments->count();
+
         //cảm xúc của người dùng với blog này
-        $blog->clientFeedback = FeedbackBlogDetail::where([['user_id', Auth::id()], ['blog_id', $blog->id]])->first();
-        // dd($blog->clientFeedback);
+        $blog->myEmoji = EmojiBlogDetail::where([['user_id', Auth::id()], ['blog_id', $blog->id]])->first();
     }
-    // public function get($blog)
-    // {
-    //     return Blog::with([
-    //         'files',
-    //         'comments.comments',
-    //         'comments.image',
-    //         'comments.user',
-    //         'comments.feedbacks',
-    //         'comments.replyCommentDetail'
-    //     ])
-    //         ->withCount(['feedbacks', 'comments'])
-    //         ->where('id', $blog)->first();
-    // }
-    // public function find($id)
-    // {
-    //     return Blog::with(['files', 'comments.comments', 'feedbacks'])->find($id);
-    // }
-    // public function takeFeedback($blog)
-    // {
-    //     return FeedbackBlogDetail::where([['blog_id', $blog->id], ['user_id', Auth::id()]]);
-    // }
-    // public function deleteFeedback($blog)
-    // {
-    //     $this->takeFeedback($blog)->first()->delete();
-    // }
-    // public function updateFeedback($blog, Feedback $feedback)
-    // {
-    //     $this->takeFeedback($blog)->first()->update([
-    //         'feedback_id' => $feedback->id
-    //     ]);
-    // }
+    
 }

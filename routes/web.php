@@ -101,16 +101,16 @@ Route::middleware(['auth', 'auth.session', LastActivityUser::class])->group(func
     Route::get('/disovle-group/{group}', [GroupChatController::class, 'disovleGroup'])->name('disovleGroup');
     // ______________________ post
     
-    Route::get('/make-feedback/{name}/{obj}/{feedback}', [BlogController::class, 'makeFeedback'])->name('makeFeedback');
-    Route::get('/delete-feedback/{name}/{obj}', [BlogController::class, 'deleteFeedback'])->name('deleteFeedback');
-    Route::get('/toggle-feedback/{name}/{obj}', [BlogController::class, 'toggleFeedback'])->name('toggleFeedback');
+    Route::get('/make-emoji/{name}/{obj}/{emoji}', [BlogController::class, 'makeEmoji'])->name('makeEmoji');
+    Route::get('/delete-emoji/{name}/{obj}', [BlogController::class, 'deleteEmoji'])->name('deleteEmoji');
+    Route::get('/toggle-emoji/{name}/{obj}', [BlogController::class, 'toggleEmoji'])->name('toggleEmoji');
     Route::get('/blog-detail/{blog}', [BlogController::class, 'blogDetail'])->name('blogDetail');
     Route::get('/create-post',[BlogController::class,'createBlogGetView'])->name('createBlog');
     Route::post('/create-blog', [BlogController::class, 'createBlog']);
     Route::get('/load-more-post', [BlogController::class, 'loadMoreBlog'])->name('loadMorePost');
     //return view partial
-    Route::get('/count-feedback/{name}/{obj}', [BlogController::class, 'countFeedback'])->name('countFeedback');
-    Route::get('/get-feedback/{feedback?}/{isShowName?}', [BlogController::class, 'getFeedback'])->name('getFeedback');
+    Route::get('/count-emoji/{name}/{obj}', [BlogController::class, 'countEmoji'])->name('countEmoji');
+    Route::get('/get-emoji/{emoji?}/{isShowName?}', [BlogController::class, 'getEmoji'])->name('getEmoji');
     // ______________________ comment 
     Route::post('/create-comment/{blog}/{comment?}', [CommentController::class, 'createComment']);
 

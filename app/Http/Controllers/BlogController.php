@@ -7,9 +7,9 @@ use App\Events\HasNewNotificationEvent;
 use App\Events\PostEvent;
 use App\Models\Blog;
 use App\Models\Comment;
-use App\Models\Feedback;
-use App\Models\FeedbackBlogDetail;
-use App\Models\FeedbackCommentDetail;
+use App\Models\Emoji;
+use App\Models\EmojiBlogDetail;
+use App\Models\EmojiCommentDetail;
 use App\Models\ImageBlog;
 use App\Models\ImageBlogDetail;
 use App\Models\Notification;
@@ -18,10 +18,10 @@ use App\Repositories\BlogRepository;
 use App\Repositories\BlogRepositoryInterface;
 use App\Repositories\CommentRepository;
 use App\Repositories\CommentRepositoryInterface;
-use App\Repositories\FeedbackRepository;
-use App\Repositories\FeedbackRepositoryInterface;
-use App\View\Components\CountFeedbackComponent;
-use App\View\Components\GetFeedbackComponent;
+use App\Repositories\EmojiRepository;
+use App\Repositories\EmojiRepositoryInterface;
+use App\View\Components\CountEmojiComponent;
+use App\View\Components\GetEmojiComponent;
 use Barryvdh\Debugbar\Twig\Extension\Debug;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -86,64 +86,64 @@ class BlogController extends Controller
     //         return  $this->commentRepository->find($objID);
     //     }
     // }
-    // public function toggleFeedback($name, $objID)
+    // public function toggleEmoji($name, $objID)
     // {
     //     $obj = $this->findObjByName($name, $objID);
     //     if (!$obj || ($name != 'blog' && $name != 'comment'))
     //         abort(404);
-    //     $getFeedbackRender = '';
-    //     if ($this->takeFeedback($name, $obj)->exists()) {
+    //     $getEmojiRender = '';
+    //     if ($this->takeEmoji($name, $obj)->exists()) {
     //         $this->useTransaction(function () use ($name, $obj) {
-    //             $this->takeFeedback($name, $obj)->delete();
+    //             $this->takeEmoji($name, $obj)->delete();
     //         });
-    //         $getFeedbackRender = $this->feedbackRepository->getView();
+    //         $getEmojiRender = $this->emojiRepository->getView();
     //     } else {
-    //         $feedback = Feedback::where('name', 'heart')->first();
-    //         $this->createFeedback($name, $obj, $feedback);
-    //         $getFeedbackRender = $this->feedbackRepository->getView($feedback);
+    //         $emoji = Emoji::where('name', 'heart')->first();
+    //         $this->createEmoji($name, $obj, $emoji);
+    //         $getEmojiRender = $this->emojiRepository->getView($emoji);
     //     }
     //     return response()->json([
-    //         'countFeedbackRender' => str($this->countFeedback($name, $objID)),
-    //         'getFeedbackRender' => str($getFeedbackRender),
+    //         'countEmojiRender' => str($this->countEmoji($name, $objID)),
+    //         'getEmojiRender' => str($getEmojiRender),
     //         'test' => 'aaaaaaaaaaaaaa'
     //     ]);
     // }
-    // public function countFeedback($name, $objID)
+    // public function countEmoji($name, $objID)
     // {
     //     $obj = $this->findObjByName($name, $objID);
     //     if (!$obj || ($name != 'blog' && $name != 'comment')) abort(404);
     //     if ($name == 'blog') {
-    //         $obj->clientFeedback = FeedbackBlogDetail::where([['user_id', Auth::id()], ['blog_id', $obj->id]])->first();
+    //         $obj->clientEmoji = EmojiBlogDetail::where([['user_id', Auth::id()], ['blog_id', $obj->id]])->first();
     //         $size = 18;
     //     } else if ($name == 'comment') {
-    //         $obj->clientFeedback = FeedbackCommentDetail::where([['user_id', Auth::id()], ['comment_id', $obj->id]])->first();
+    //         $obj->clientEmoji = EmojiCommentDetail::where([['user_id', Auth::id()], ['comment_id', $obj->id]])->first();
     //         $size = 12;
     //     }
-    //     $obj->countFeedback = $obj->feedbacks->count();
-    //     return (new CountFeedbackComponent($obj, $size))->render();
+    //     $obj->countEmoji = $obj->emojis->count();
+    //     return (new CountEmojiComponent($obj, $size))->render();
     // }
 
-    // public function makeFeedback($name, $objID, Feedback $feedback)
+    // public function makeEmoji($name, $objID, Emoji $emoji)
     // {
     //     $obj = $this->findObjByName($name, $objID);
-    //     if (!$obj || ($name != 'blog' && $name != 'comment') || !$feedback) {
+    //     if (!$obj || ($name != 'blog' && $name != 'comment') || !$emoji) {
     //         //blog k có hoặc người dùng bị chặn
     //         abort(404);
     //     }
 
-    //     if ($this->takeFeedback($name, $obj)->exists()) {
-    //         //update feedback
-    //         $this->updateFeedback($name, $obj, $feedback);
+    //     if ($this->takeEmoji($name, $obj)->exists()) {
+    //         //update emoji
+    //         $this->updateEmoji($name, $obj, $emoji);
     //     } else {
-    //         $this->createFeedback($name, $obj, $feedback);
-    //         //create new feedback
+    //         $this->createEmoji($name, $obj, $emoji);
+    //         //create new emoji
     //     }
     //     return response()->json([
-    //         'countFeedbackRender' => str($this->countFeedback($name, $objID)),
-    //         'getFeedbackRender' => str($this->feedbackRepository->getView($feedback)),
+    //         'countEmojiRender' => str($this->countEmoji($name, $objID)),
+    //         'getEmojiRender' => str($this->emojiRepository->getView($emoji)),
     //     ]);
     // }
-    // public function deleteFeedback($name, $objID)
+    // public function deleteEmoji($name, $objID)
     // {
     //     $obj = $this->findObjByName($name, $objID);
     //     if (!$obj || ($name != 'blog' && $name != 'comment')) {
@@ -151,48 +151,48 @@ class BlogController extends Controller
     //     }
     //     $this->useTransaction(function () use ($name, $obj) {
     //         if ($name == 'blog') {
-    //             $this->blogRepository->deleteFeedback($obj);
+    //             $this->blogRepository->deleteEmoji($obj);
     //         } else if ($name == 'comment') {
-    //             $this->commentRepository->deleteFeedback($obj);
+    //             $this->commentRepository->deleteEmoji($obj);
     //         }
     //     });
     //     return redirect()->back();
     // }
-    // public function updateFeedback($name, $obj, Feedback $feedback)
+    // public function updateEmoji($name, $obj, Emoji $emoji)
     // {
     //     if ($name == 'blog') {
-    //         $this->blogRepository->updateFeedback($obj, $feedback);
+    //         $this->blogRepository->updateEmoji($obj, $emoji);
     //     } else if ($name == 'comment') {
-    //         $this->commentRepository->updateFeedback($obj, $feedback);
+    //         $this->commentRepository->updateEmoji($obj, $emoji);
     //     }
     // }
-    // public function createFeedback($name, $obj, Feedback $feedback)
+    // public function createEmoji($name, $obj, Emoji $emoji)
     // {
-    //     $this->createNotify($name, $obj, $feedback);
-    //     return $this->useTransaction(function () use ($name, $obj, $feedback) {
+    //     $this->createNotify($name, $obj, $emoji);
+    //     return $this->useTransaction(function () use ($name, $obj, $emoji) {
     //         if ($name == 'blog') {
-    //             FeedbackBlogDetail::create([
+    //             EmojiBlogDetail::create([
     //                 'user_id' => Auth::id(),
     //                 'blog_id' => $obj->id,
-    //                 'feedback_id' => $feedback->id
+    //                 'emoji_id' => $emoji->id
     //             ]);
     //         } else if ($name == 'comment') {
-    //             FeedbackCommentDetail::create([
+    //             EmojiCommentDetail::create([
     //                 'user_id' => Auth::id(),
     //                 'comment_id' => $obj->id,
-    //                 'feedback_id' => $feedback->id
+    //                 'emoji_id' => $emoji->id
     //             ]);
     //         }
     //     });
     // }
-    // public function createNotify($name, $obj, $feedback)
+    // public function createNotify($name, $obj, $emoji)
     // {
     //     if ($obj->user->id == Auth::id()) return;
-    //     if ($obj->feedbacks->count() <= 1)
+    //     if ($obj->emojis->count() <= 1)
     //         $content = __("public.Someone reacted to your something", ['Someone' => Auth::user()->name, 'something' => $name]);
     //     else
-    //         $content = __("public.Someone and some others reacted to your something", ['Someone' => Auth::user()->name, 'some' => $obj->feedbacks->count() - 1, 'something' => $name]);
-    //     $content = $content . " " . $this->feedbackRepository->getView($feedback, false, 15);
+    //         $content = __("public.Someone and some others reacted to your something", ['Someone' => Auth::user()->name, 'some' => $obj->emojis->count() - 1, 'something' => $name]);
+    //     $content = $content . " " . $this->emojiRepository->getView($emoji, false, 15);
     //     $notification = Notification::create([
     //         'user_id_send' => Auth::id(),
     //         'content' => $content,
@@ -202,12 +202,12 @@ class BlogController extends Controller
     //     ]);
     //     event(new HasNewNotificationEvent($notification));
     // }
-    // public function takeFeedback($name, $obj)
+    // public function takeEmoji($name, $obj)
     // {
     //     if ($name == 'blog') {
-    //         return $this->blogRepository->takeFeedback($obj);
+    //         return $this->blogRepository->takeEmoji($obj);
     //     } else if ($name == 'comment') {
-    //         return $this->commentRepository->takeFeedback($obj);
+    //         return $this->commentRepository->takeEmoji($obj);
     //     }
     // }
     // public function createBlog(Request $request)

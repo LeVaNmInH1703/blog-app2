@@ -4,14 +4,15 @@ namespace Database\Seeders;
 
 use App\Models\Blog;
 use App\Models\Comment;
-use App\Models\Feedback;
-use App\Models\FeedbackBlogDetail;
-use App\Models\FeedbackCommentDetail;
+use App\Models\Emoji;
+use App\Models\EmojiBlogDetail;
+use App\Models\EmojiCommentDetail;
 use App\Models\FriendShips;
 use App\Models\Message;
 use App\Models\ReplyCommentDetail;
 use App\Models\User;
 use Database\Factories\ReplyCommentDetailFactory;
+use Exception;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -22,16 +23,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->makeFeedbacks();
+        $this->makeEmojis();
         $this->createUser();
         $this->friendShip();
         $this->makeBlog();
-        $this->makeFeedbackBlogAction();
-        $this->makeComments();
+        // $this->makeEmojiBlogAction();
+        // $this->makeComments();
+
         // $this->makeGroupChat();//chưa làm nên k chạy make message
         // $this->makeMessage();
-        $this->makeFeedbackCommentAction();
-        $this->makeReplyCommentDetail();
+        
+        // $this->makeEmojiCommentAction();
+        // $this->makeReplyCommentDetail();
+    }
+    public function makeEmojis()
+    {
+        Emoji::factory()->create([
+            'name' => 'like',
+        ]);
     }
     public function makeReplyCommentDetail()
     {
@@ -58,37 +67,33 @@ class DatabaseSeeder extends Seeder
     }
     public function friendShip()
     {
-        for ($i = 1; $i < 30; $i++) {
+        for ($i = 1; $i < 50; $i++) {
             FriendShips::factory()->create();
             //lưu ý ->count() sẽ k phải create one mà là create all nên sẽ không thể lấy giá trị bản ghi trước
         }
     }
     public function makeBlog()
     {
-        Blog::factory()->count(30)->create();
-    }
-    public function makeFeedbacks()
-    {
-        Feedback::factory()->create([
-            'icon' => "",
-            'name'=>'like'
+        Blog::factory()->count(30)->create([
+            'user_id' => User::inRandomOrder()->first()->id,
+            'content'=>Fake()->paragraph(1),
         ]);
     }
-    public function makeFeedbackBlogAction()
+
+    public function makeEmojiBlogAction()
     {
         for ($i = 1; $i <= 60; $i++) {
-            FeedbackBlogDetail::factory()->create();
+            EmojiBlogDetail::factory()->create();
         }
     }
     public function makeComments()
     {
-
         Comment::factory()->count(200)->create();
     }
-    public function makeFeedbackCommentAction()
+    public function makeEmojiCommentAction()
     {
         for ($i = 1; $i <= 100; $i++) {
-            FeedbackCommentDetail::factory()->create();
+            EmojiCommentDetail::factory()->create();
         }
     }
 }

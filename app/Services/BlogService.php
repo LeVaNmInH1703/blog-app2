@@ -11,6 +11,6 @@ class BlogService extends BaseService {
         $this->repository=$blogRepository;
     }
     public function getAndSetSomeBlog(){
-        return $this->repository->getAndSetSomeBlog();
+        return $this->repository->getAndSetSome();
     }
 }

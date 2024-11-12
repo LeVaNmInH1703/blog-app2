@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Feedback>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Emoji>
  */
-class FeedbackFactory extends Factory
+class EmojiFactory extends Factory
 {
     /**
      * Define the model's default state.

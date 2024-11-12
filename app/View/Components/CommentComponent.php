@@ -12,7 +12,7 @@ class CommentComponent extends Component
      * Create a new component instance.
      */
     public $name, $level;
-    public $comment, $feedbacks;
+    public $comment, $emojis;
 
     public function __construct($comment, $level = null)
     {

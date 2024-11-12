@@ -5,21 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class Comment extends BlogAndComment
 {
     use HasFactory;
     protected $guarded = [];
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    protected $imageDetailModel=ImageCommentDetail::class,$videoDetailModel=VideoCommentDetail::class,$emojiDetailModel=EmojiCommentDetail::class;
     public function blog()
     {
         return $this->belongsTo(Blog::class);
-    }
-    public function feedbacks()
-    {
-        return $this->belongsTo(Feedback::class);
     }
     public function commentReplies()
     {
@@ -31,13 +24,5 @@ class Comment extends Model
         id của bảng quan hệ trên bảng trung gian relatedPivotKey:'reply_comment_id'
         */
         return $this->belongsToMany(Comment::class, 'reply_comment_details', 'comment_id', 'reply_comment_id');
-    }
-    public function image()
-    {
-        return $this->belongsTo(ImageCommentDetail::class, 'id', 'comment_id');
-    }
-    public function videos()
-    {
-        return $this->hasMany(VideoCommentDetail::class, 'comment_id');
     }
 }

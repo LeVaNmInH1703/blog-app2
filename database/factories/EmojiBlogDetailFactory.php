@@ -3,15 +3,15 @@
 namespace Database\Factories;
 
 use App\Models\Blog;
-use App\Models\Feedback;
-use App\Models\FeedbackBlogDetail;
+use App\Models\Emoji;
+use App\Models\EmojiBlogDetail;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FeedbackBlogDetail>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\EmojiBlogDetail>
  */
-class FeedbackBlogDetailFactory extends Factory
+class EmojiBlogDetailFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -24,14 +24,14 @@ class FeedbackBlogDetailFactory extends Factory
             $user_id = User::inRandomOrder()->first()->id;
             $blog_id = Blog::inRandomOrder()->first()->id;
         }
-        while (FeedbackBlogDetail::where([
+        while (EmojiBlogDetail::where([
             ['user_id',$user_id],
             ['blog_id',$blog_id],
         ])->exists());   
         return [
             'user_id' => $user_id,
             'blog_id'=>$blog_id,
-            'feedback_id'=>Feedback::inRandomOrder()->first()->id,
+            'emoji_id'=>Emoji::inRandomOrder()->first()->id,
         ];
     }
 }

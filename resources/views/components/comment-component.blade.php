@@ -1,4 +1,22 @@
-<div class="comment comment_wrap obj_wrap" data-id="{{ $comment->id }}" data-name='comment'>
+<li>
+    <div class="comet-avatar">
+        <img src="{{ $comment->user->url_avatar }}" alt="" />
+    </div>
+    <div class="we-comment">
+        <h5>
+            <a href="time-line.html" title="">{{ $comment->user->id == Auth::id() ? 'You' : $comment->user->name }}</a>
+        </h5>
+        <p>
+            {{ $comment->content }}
+        </p>
+        <div class="inline-itms">
+            <span>@diffForHumans($comment->created_at)</span>
+            <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
+            <a href="#" title=""><i class="fa fa-heart"></i><span>20</span></a>
+        </div>
+    </div>
+</li>
+{{-- <div class="comment comment_wrap obj_wrap" data-id="{{ $comment->id }}" data-name='comment'>
     <!-- Header -->
     <div class="comment-header">
         <div><img src="{{ $comment->user->url_avatar }}" alt="Avatar" class="avatar">
@@ -25,7 +43,7 @@
                 onmouseleave="handleMouseLeaveButtonLike(event)" onmouseenter="handleMouseEnterButtonLike(event)"
                 onclick="handleClickButtonLike(event)">
                 <div class="btn_like_text text-center">
-                    <x-get-feedback-component :feedback='$comment->clientFeedback' :isShowName=true />
+                    <x-get-emoji-component :emoji='$comment->clientEmoji' :isShowName=true />
                 </div>
             </button>
             <button class="btn btn-custom btn_comment text-white btn-sm" onclick="handleClickToComment(event)">
@@ -36,8 +54,8 @@
                 <x-comment-count-comment-component :number="$comment->comments->count()"/>
             </span>
         </div>
-        <span class="stats count_feedback">
-            <x-count-feedback-component :obj=$comment :size=12 />
+        <span class="stats count_emoji">
+            <x-count-emoji-component :obj=$comment :size=12 />
         </span>
     </div>
     <!-- Comment con -->
@@ -155,4 +173,4 @@
         }
     }
 </style>
-@endsection
+@endsection --}}

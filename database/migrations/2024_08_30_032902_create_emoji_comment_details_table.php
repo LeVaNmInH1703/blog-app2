@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('feedback_blog_details', function (Blueprint $table) {
+        Schema::create('emoji_comment_details', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('blog_id');
-            $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('cascade');
-            $table->unsignedBigInteger('feedback_id');
-            $table->foreign('feedback_id')->references('id')->on('feedbacks')->onDelete('cascade');
-            $table->unique(['user_id','blog_id','feedback_id']);
+            $table->unsignedBigInteger('comment_id');
+            $table->foreign('comment_id')->references('id')->on('comments')->onDelete('cascade');
+            $table->unsignedBigInteger('emoji_id');
+            $table->foreign('emoji_id')->references('id')->on('emojis')->onDelete('cascade');
+            $table->unique(['user_id','comment_id','emoji_id']);
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('emoij_blog_details');
+        Schema::dropIfExists('emoji_comment_details');
     }
 };
