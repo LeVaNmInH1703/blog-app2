@@ -53,10 +53,7 @@ Route::middleware(['auth', 'auth.session', LastActivityUser::class])->group(func
     })->name('lang');
 
     // ______________________ home
-
-    // Route::get('/',[function (){
-    //     return 'a';
-    // }] )->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     // ______________________ session
     Route::get('/set-session/{key}/{value}', [function ($key, $value) {
 
@@ -103,17 +100,17 @@ Route::middleware(['auth', 'auth.session', LastActivityUser::class])->group(func
     Route::get('/leave-group/{group}', [GroupChatController::class, 'leaveGroup'])->name('leaveGroup');
     Route::get('/disovle-group/{group}', [GroupChatController::class, 'disovleGroup'])->name('disovleGroup');
     // ______________________ post
-    Route::get('/', [BlogController::class, 'index'])->name('home');
-    Route::get('/make-feeling/{name}/{obj}/{feeling}', [BlogController::class, 'makeFeeling'])->name('makeFeeling');
-    Route::get('/delete-feeling/{name}/{obj}', [BlogController::class, 'deleteFeeling'])->name('deleteFeeling');
-    Route::get('/toggle-feeling/{name}/{obj}', [BlogController::class, 'toggleFeeling'])->name('toggleFeeling');
+    
+    Route::get('/make-feedback/{name}/{obj}/{feedback}', [BlogController::class, 'makeFeedback'])->name('makeFeedback');
+    Route::get('/delete-feedback/{name}/{obj}', [BlogController::class, 'deleteFeedback'])->name('deleteFeedback');
+    Route::get('/toggle-feedback/{name}/{obj}', [BlogController::class, 'toggleFeedback'])->name('toggleFeedback');
     Route::get('/blog-detail/{blog}', [BlogController::class, 'blogDetail'])->name('blogDetail');
     Route::get('/create-post',[BlogController::class,'createBlogGetView'])->name('createBlog');
     Route::post('/create-blog', [BlogController::class, 'createBlog']);
-    Route::get('/load-more-post', [BlogController::class, 'loadMorePost'])->name('loadMorePost');
+    Route::get('/load-more-post', [BlogController::class, 'loadMoreBlog'])->name('loadMorePost');
     //return view partial
-    Route::get('/count-feeling/{name}/{obj}', [BlogController::class, 'countFeeling'])->name('countFeeling');
-    Route::get('/get-feeling/{feeling?}/{isShowName?}', [BlogController::class, 'getFeeling'])->name('getFeeling');
+    Route::get('/count-feedback/{name}/{obj}', [BlogController::class, 'countFeedback'])->name('countFeedback');
+    Route::get('/get-feedback/{feedback?}/{isShowName?}', [BlogController::class, 'getFeedback'])->name('getFeedback');
     // ______________________ comment 
     Route::post('/create-comment/{blog}/{comment?}', [CommentController::class, 'createComment']);
 

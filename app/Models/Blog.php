@@ -8,28 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class Blog extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'user_id',
-        'content',
-    ];
-    public function getId()
-    {
-        return $this->id;
-    }
+    protected $guarded = [];
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public function files()
+    public function images()
     {
-        return $this->hasMany(FileBlog::class, 'blog_id');
+        return $this->hasMany(ImageBlogDetail::class);
+    }
+    public function videos()
+    {
+        return $this->hasMany(VideoBlogDetail::class);
     }
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'blog_id');
+        return $this->hasMany(Comment::class);
     }
-    public function feelings()
+    public function feedbacks()
     {
-        return $this->hasMany(Comment::class, 'blog_id');
+        return $this->hasMany(Comment::class);
     }
 }

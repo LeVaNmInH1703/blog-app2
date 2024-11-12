@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\requestReloadPage;
-use App\Models\Feeling;
+use App\Models\Feedback;
 use App\Models\FriendShips;
 use App\Models\Message;
 use App\Models\User;

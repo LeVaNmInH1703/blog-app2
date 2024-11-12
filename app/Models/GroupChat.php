@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class GroupChat extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','last_activity_at','isChatWithSomeone','url_avatar'];
+    protected $guarded = [];
+
     public function users(){
         return $this->belongsToMany(User::class,'group_chat_details','group_id','user_id')->withPivot('role_id');
     }

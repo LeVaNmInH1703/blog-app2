@@ -8,11 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class FileMessage extends Model
 {
     use HasFactory;
-    protected $fillable=[
-        'message_id',
-        'file_name',
-        'old_name',
-    ];
+    protected $guarded = [];
+
     public function message(){
         return $this->belongsTo(Message::class);
     }

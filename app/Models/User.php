@@ -10,41 +10,11 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'url_avatar',
-        'last_activity_at',
-        'google_id',
-        'email_verified_at',
-        'birth_day',
-        'country',
-        'education',
-        'gender',
-        'token_verify_email'
-    ];
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    protected $guarded = [];
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -86,20 +56,5 @@ class User extends Authenticatable
     public function notifications(){
         return $this->hasMany(Notification::class, 'user_id_receive');
 
-    }
-    public function getTempAttribute(){
-        //Accessor test
-        // user->temp=return ...;
-        return "{$this->name} {$this->email}";
-    }
-    public function setNameAttribute($value)
-    {
-        // test Mutator
-        // cấu hình cách mà Name được lưu
-        // $user = User::create([
-        //     'first_name' => 'JOHN',
-        //     'last_name' => 'DOE',
-        // ]);
-        $this->attributes['name'] = $value;// ví dụ strtolower($value);
     }
 }

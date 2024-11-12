@@ -20,7 +20,6 @@ return new class extends Migration
             $table->unsignedBigInteger('group_id_receive');
             $table->foreign('group_id_receive')->references('id')->on('group_chats')->onDelete('cascade');
             $table->text('content')->nullable(true);
-            $table->boolean('isSaw')->default(false);
         });
     }
 

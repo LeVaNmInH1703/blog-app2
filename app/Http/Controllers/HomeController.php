@@ -4,27 +4,50 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Comment;
-use App\Models\Feeling;
-use App\Models\FeelingBlogDetail;
+use App\Models\Feedback;
+use App\Models\FeedbackBlogDetail;
 use App\Models\User;
 use App\Notifications\EventNotification;
 use App\Notifications\SimpleNotification;
+use App\Services\BlogService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    public $MESSAGECONTROLLER;
-    public function __construct(MessageController $messageController)
+    protected $blogService;
+    public function __construct(BlogService $blogService)
     {
-        $this->MESSAGECONTROLLER = $messageController;
+        $this->blogService = $blogService;
     }
     public function about()
     {
-
         return view("pages.about");
     }
+    public function index(){
+        // check verify mail
+        if (!Auth::user()->email_verified_at)
+            return redirect()->route('waitToVerifyEmail');
+        // get blogs
+        $blogs=$this->blogService->getAndSetSomeBlog();
+        return view('pages.home', compact('blogs'));
+    }
+    // public function index()
+    // {
+    //     if (!Auth::user()->email_verified_at)
+    //         return redirect()->route('waitToVerifyEmail');
+    //     // dd(Auth::user()->temp);
+    //     $blogs = $this->blogRepository->takeAndSetSomeBlog();
+    //     // chèn blog mới tạo vào trước
+    //     $newBlog = session('newBlog');
+    //     if ($newBlog) {
+    //         $blogs = $this->blogRepository->takeAndSetSomeBlog(5, [$newBlog->getId()]);
+    //         $blogs->prepend($newBlog);
+    //         session()->forget('newBlog');
+    //     }
+    //     return view("pages.home", compact('blogs'));
+    // }
     public function test(){
         //____________ gửi sms qua vonage ____________ 
         // $basic  = new \Vonage\Client\Credentials\Basic("adc7c688", "ykcOX9FKR5Gf3KDa");

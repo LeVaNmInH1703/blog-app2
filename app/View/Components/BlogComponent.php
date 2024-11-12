@@ -12,11 +12,11 @@ class BlogComponent extends Component
     /**
      * Create a new component instance.
      */
-    public $blog,$feelings;
-    public function __construct($blog,$feelings=null)
+    public $blog,$feedbacks;
+    public function __construct($blog,$feedbacks=null)
     {
        $this->blog=$blog;
-       $this->feelings=$feelings;
+       $this->feedbacks=$feedbacks;
        $tr = new GoogleTranslate(session('locale'));
        $this->blog->contentTranslated = $tr->translate($this->blog->content??'');
        $this->blog->getLastDetectedSource=$this->blog->content?$tr->getLastDetectedSource():session('locale');

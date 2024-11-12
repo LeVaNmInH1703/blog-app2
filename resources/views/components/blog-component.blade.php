@@ -69,7 +69,7 @@
                 </figure>
                 <div class="we-video-info">
                     <ul>
-                        <x-count-feeling-component :obj=$blog />
+                        <x-count-feedback-component :obj=$blog />
 
                         <li>
                             <span class="comment" title="Comments">
@@ -88,9 +88,9 @@
                         </li>
                     </ul>
                     <div class="users-thumb-list">
-                        @foreach ($blog->feelings as $feelingDetail)
-                            <a data-toggle="tooltip" title="{{ $feelingDetail->userName }}" href="{{ route('profile',$feelingDetail->userId) }}">
-                                <img alt="{{ $feelingDetail->userName }}" src="{{ $feelingDetail->url_avatar }}" />
+                        @foreach ($blog->feedbacks as $feedbackDetail)
+                            <a data-toggle="tooltip" title="{{ $feedbackDetail->userName }}" href="{{ route('profile',$feedbackDetail->userId) }}">
+                                <img alt="{{ $feedbackDetail->userName }}" src="{{ $feedbackDetail->url_avatar }}" />
                             </a>
                             @if($loop->index == 4) @break @endif
                         @endforeach

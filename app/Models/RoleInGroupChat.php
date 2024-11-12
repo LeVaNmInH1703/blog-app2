@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class RoleInGroupChat extends Model
 {
     use HasFactory;
-    protected $fillable = ['name',];//admin,member
+    protected $guarded = [];
+    //admin,member
 }

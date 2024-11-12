@@ -1,7 +1,7 @@
-<div class="feelings_container p-2" id="feelings_container" style="display:none;">
-    @foreach ($feelings as $feeling)
-        <a data-feeling_id="{{ $feeling->id }}" class="text-decoration-none p-1" onclick="handleClickATag(event)">
-            <x-get-feeling-component :feeling=$feeling :size=35 />
+<div class="feedbacks_container p-2" id="feedbacks_container" style="display:none;">
+    @foreach ($feedbacks as $feedback)
+        <a data-feedback_id="{{ $feedback->id }}" class="text-decoration-none p-1" onclick="handleClickATag(event)">
+            <x-get-feedback-component :feedback=$feedback :size=35 />
         </a>
     @endforeach
 </div>

@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ReplyCommentDetail extends Model
 {
     use HasFactory;
-    protected $fillable=['comment_id','reply_comment_id'];
+    protected $guarded = [];
+
 }

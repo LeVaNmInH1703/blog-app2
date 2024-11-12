@@ -533,7 +533,7 @@
 @endsection
 
 @section('script-app')
-    <script src="{{ asset('js/feelingAction.js') }}"></script>
+    <script src="{{ asset('js/feedbackAction.js') }}"></script>
     <script src="{{ asset('js/blog/clickToDetail.js') }}"></script>
     <script src="{{ asset('js/profile/handle.js') }}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaiIsPiBv1_-5e0-c1PX8oSVhVFdBnxkg&callback=initMap" async

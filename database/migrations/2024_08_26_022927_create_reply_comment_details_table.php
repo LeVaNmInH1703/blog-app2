@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreign('comment_id')->references('id')->on('comments')->onDelete('cascade');
             $table->unsignedBigInteger('reply_comment_id');//được trả lời bởi comment này
             $table->foreign('reply_comment_id')->references('id')->on('comments')->onDelete('cascade');
-            $table->unique(['reply_comment_id']);
         });
     }
 

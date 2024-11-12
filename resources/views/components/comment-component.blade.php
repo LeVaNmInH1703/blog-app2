@@ -25,7 +25,7 @@
                 onmouseleave="handleMouseLeaveButtonLike(event)" onmouseenter="handleMouseEnterButtonLike(event)"
                 onclick="handleClickButtonLike(event)">
                 <div class="btn_like_text text-center">
-                    <x-get-feeling-component :feeling='$comment->clientFeeling' :isShowName=true />
+                    <x-get-feedback-component :feedback='$comment->clientFeedback' :isShowName=true />
                 </div>
             </button>
             <button class="btn btn-custom btn_comment text-white btn-sm" onclick="handleClickToComment(event)">
@@ -36,8 +36,8 @@
                 <x-comment-count-comment-component :number="$comment->comments->count()"/>
             </span>
         </div>
-        <span class="stats count_feeling">
-            <x-count-feeling-component :obj=$comment :size=12 />
+        <span class="stats count_feedback">
+            <x-count-feedback-component :obj=$comment :size=12 />
         </span>
     </div>
     <!-- Comment con -->

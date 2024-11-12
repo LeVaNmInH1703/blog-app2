@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class GroupChatDetail extends Model
 {
     use HasFactory;
-    protected $fillable = [ 'user_id', 'role_id', 'group_id'];
+    protected $guarded = [];
+
     public function user(){
         return $this->belongsTo(User::class);
     }

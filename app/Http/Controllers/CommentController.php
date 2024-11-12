@@ -6,6 +6,7 @@ use App\Events\HasNewNotificationEvent;
 use App\Models\Blog;
 use App\Models\Comment;
 use App\Models\ImageComment;
+use App\Models\ImageCommentDetail;
 use App\Models\Notification;
 use App\Models\ReplyCommentDetail;
 use App\View\Components\CommentComponent;
@@ -31,7 +32,7 @@ class CommentController extends Controller
 
             //move
             $image->move(public_path('images'), $imageAvatarName);
-            ImageComment::create([
+            ImageCommentDetail::create([
                 'image_comment_name' => $imageAvatarName,
                 'comment_id' => $newComment->id
             ]);
